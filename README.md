@@ -106,10 +106,8 @@ Stack B:             7
                      v
 Stack A (após push): 2 -> 4 -> 7 -> 9
 ```
-
-
-
-- suporte ao turk:
-c,d
-
-
+# para compilar para ja é assim:
+```c
+> cc -Wall -Wextra -Werror srcs/main.c srcs/stack/*.c srcs/utils/*.c srcs/error/*.c -I includes -o push_swap
+```
+ainda nao fiz o makefile:)
