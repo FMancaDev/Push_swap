@@ -1,37 +1,51 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   errors.c                                           :+:      :+:    :+:   */
+/*   op_push.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fomanca <fomanca@student.42porto.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/12/06 15:37:18 by fomanca           #+#    #+#             */
-/*   Updated: 2025/12/13 15:30:45 by fomanca          ###   ########.fr       */
+/*   Created: 2025/12/07 14:06:22 by fomanca           #+#    #+#             */
+/*   Updated: 2025/12/13 15:31:28 by fomanca          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/push_swap.h"
 
-void	free_stack(t_node **stack)
+static void	push(t_node **dst, t_node **src)
 {
 	t_node	*tmp;
-	t_node	*current;
 
-	if (!stack)
+	if (!*src)
 		return ;
-	current = *stack;
-	while (current)
+	tmp = *src;
+	*src = (*src)->next;
+	if (*src)
+		(*src)->prev = NULL;
+	tmp->prev = NULL;
+	if (!*dst)
 	{
-		tmp = current->next;
-		free(current);
-		current = tmp;
+		*dst = tmp;
+		tmp->next = NULL;
 	}
-	*stack = NULL;
+	else
+	{
+		tmp->next = *dst;
+		tmp->next->prev = tmp;
+		*dst = tmp;
+	}
 }
 
-void	free_errors(t_node **a)
+void	pa(t_node **a, t_node **b, int p)
 {
-	free_stack(a);
-	write (2, "Error\n", 6);
-	exit(1);
+	push(a, b);
+	if (p)
+		write(1, "pa\n", 3);
+}
+
+void	pb(t_node **b, t_node **a, int p)
+{
+	push((t_node **)b, (t_node **)a);
+	if (p)
+		write(1, "pb\n", 3);
 }

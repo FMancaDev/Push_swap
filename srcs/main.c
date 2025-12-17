@@ -6,34 +6,31 @@
 /*   By: fomanca <fomanca@student.42porto.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/06 15:51:06 by fomanca           #+#    #+#             */
-/*   Updated: 2025/12/06 16:23:35 by fomanca          ###   ########.fr       */
+/*   Updated: 2025/12/16 18:11:26 by fomanca          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/push_swap.h"
-#include <stdio.h>
 
-int	main(int argc, char **argv)
+int	main(int ac, char **av)
 {
-	t_stack	*a;
-	t_stack	*temp;
+	t_node	*stack_a;
+	t_node	*stack_b;
 
-	a = NULL;
-
-	if (argc == 1 || (argc == 2 && !argv[1][0]))
+	stack_a = NULL;
+	stack_b = NULL;
+	if (ac == 1 || (ac == 2 && !av[1][0]))
 		return (1);
-
-	init_stack_a(&a, argv + 1);
-
-	printf("\n--- O MEU STACK A ---\n");
-	temp = a;
-	while (temp)
+	load_stack(&stack_a, av + 1);
+	if (!check_sorted(stack_a))
 	{
-		printf("Node: %d\n", temp->value);
-		temp = temp->next;
+		if (get_size(stack_a) == 2)
+			sa(&stack_a, 1);
+		else if (get_size(stack_a) == 3)
+			sort_tiny(&stack_a);
+		else
+			solve_complex(&stack_a, &stack_b);
 	}
-	printf("---------------------\n");
-
-	free_stack(&a); 
+	free_all(&stack_a);
 	return (0);
 }

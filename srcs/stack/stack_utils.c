@@ -6,48 +6,80 @@
 /*   By: fomanca <fomanca@student.42porto.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/06 14:25:32 by fomanca           #+#    #+#             */
-/*   Updated: 2025/12/06 14:54:13 by fomanca          ###   ########.fr       */
+/*   Updated: 2025/12/13 15:17:53 by fomanca          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/push_swap.h"
 
-t_stack	*find_last_node(t_stack *head)
+int	get_size(t_node *lst)
 {
-	if (!head)
-		return (NULL);
-	while (head->next)
+	int	i;
+
+	i = 0;
+	while (lst)
 	{
-		head = head->next;
-	}	
-	return (head);
+		lst = lst->next;
+		i++;
+	}
+	return (i);
 }
 
-void	append_node(t_stack **stack, int n)
+t_node	*get_last(t_node *lst)
 {
-	t_stack	*node;
-	t_stack	*last_node;
+	if (!lst)
+		return (NULL);
+	while (lst->next)
+		lst = lst->next;
+	return (lst);
+}
 
-	if (!stack)
-		return ;
-	node = malloc(sizeof(t_stack));
-	if (!node)
-		return ;
-	node->next = NULL;
-	node->value = n;
-	node->cheapest = false;
-    node->push_cost = 0;
-    node->target_node = NULL;
+void	add_back(t_node **lst, int n)
+{
+	t_node	*new_node;
+	t_node	*last;
 
-	if (*stack == NULL)
+	new_node = malloc(sizeof(t_node));
+	if (!new_node)
+		return ;
+	new_node->val = n;
+	new_node->next = NULL;
+	if (!*lst)
 	{
-		*stack = node;
-		node->prev = NULL;
+		*lst = new_node;
+		new_node->prev = NULL;
 	}
 	else
 	{
-		last_node = find_last_node(*stack);
-		last_node->next = node;
-		node->prev = last_node;
+		last = get_last(*lst);
+		last->next = new_node;
+		new_node->prev = last;
 	}
+}
+
+void	free_all(t_node **lst)
+{
+	t_node	*tmp;
+
+	if (!lst)
+		return ;
+	while (*lst)
+	{
+		tmp = (*lst)->next;
+		free(*lst);
+		*lst = tmp;
+	}
+}
+
+int	check_sorted(t_node *lst)
+{
+	if (!lst)
+		return (1);
+	while (lst->next)
+	{
+		if (lst->val > lst->next->val)
+			return (0);
+		lst = lst->next;
+	}
+	return (1);
 }

@@ -1,43 +1,51 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_atol.c                                          :+:      :+:    :+:   */
+/*   extra_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fomanca <fomanca@student.42porto.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/12/06 15:10:58 by fomanca           #+#    #+#             */
-/*   Updated: 2025/12/06 15:56:12 by fomanca          ###   ########.fr       */
+/*   Created: 2025/12/13 15:18:30 by fomanca           #+#    #+#             */
+/*   Updated: 2025/12/13 15:18:35 by fomanca          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/push_swap.h"
 
-long	ft_atol(const char *str)
+t_node	*find_min(t_node *lst)
 {
-	int	i;
-	int	result;
-	int	sign;
+	long	min;
+	t_node	*node;
 
-	i = 0;
-	result = 0;
-	sign = 1;
-
-	while (str[i] == ' ' || (str[i] >= 9 && str[i] <= 13))
+	min = LONG_MAX;
+	node = NULL;
+	while (lst)
 	{
-		i++;
-	}
-	if (str[i] == '-' || str[i] == '+')
-	{
-		if (str[i] == '-')
+		if (lst->val < min)
 		{
-			sign *= -1;
+			min = lst->val;
+			node = lst;
 		}
-		i++;
+		lst = lst->next;
 	}
-	while (str[i] >= '0' && str[i] <= '9')
+	return (node);
+}
+
+t_node	*find_max(t_node *lst)
+{
+	long	max;
+	t_node	*node;
+
+	max = LONG_MIN;
+	node = NULL;
+	while (lst)
 	{
-		result = (result * 10) + (str[i] - '0');
-		i++;
+		if (lst->val > max)
+		{
+			max = lst->val;
+			node = lst;
+		}
+		lst = lst->next;
 	}
-	return (result * sign);
+	return (node);
 }
