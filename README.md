@@ -110,4 +110,4 @@ Stack A (após push): 2 -> 4 -> 7 -> 9
 ```c
 > cc -Wall -Wextra -Werror srcs/main.c srcs/stack/*.c srcs/utils/*.c srcs/error/*.c -I includes -o push_swap
 ```
-ainda nao fiz o makefile:)
+ainda nao esta completo, pk nao trato caso o input seja nao numerico...
