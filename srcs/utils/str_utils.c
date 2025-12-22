@@ -6,7 +6,7 @@
 /*   By: fomanca <fomanca@student.42porto.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/13 15:19:43 by fomanca           #+#    #+#             */
-/*   Updated: 2025/12/16 17:24:37 by fomanca          ###   ########.fr       */
+/*   Updated: 2025/12/22 17:24:04 by fomanca          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,21 +16,25 @@ long	str_to_long(const char *s)
 {
 	long	res;
 	int		sign;
+	int		found;
 
 	res = 0;
 	sign = 1;
+	found = 0;
 	while (*s == ' ' || (*s >= 9 && *s <= 13))
 		s++;
 	if (*s == '-' || *s == '+')
-	{
-		if (*s == '-')
+		if (*s++ == '-')
 			sign = -1;
-		s++;
-	}
 	while (*s >= '0' && *s <= '9')
 	{
-		res = res * 10 + (*s - '0');
-		s++;
+		res = res * 10 + (*s++ - '0');
+		found = 1;
+	}
+	if (*s != '\0' || !found)
+	{
+		write(2, "Error\n", 6);
+		exit(1);
 	}
 	return (res * sign);
 }
